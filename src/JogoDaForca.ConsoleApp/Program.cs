@@ -6,35 +6,38 @@ namespace JogoDaForca.ConsoleApp
     {
        static void Main(string[] args)
         {
-            #region palavra inicial
-           
+
+            int quantiaerros = 0;
+
+            bool jogadorenforcou = false;
+           bool jogadorganhou= false;
 
             forca forca = new forca();
-            string palavrainicial = forca.EscolherPalavraAleatoria();
-            char[] letras = forca.extrair(palavrainicial);
-            Console.WriteLine(string.Join("", letras));
 
-            #endregion
-            #region desenho da forca
+             forca.EscolherPalavraAleatoria();
+            forca.extrair();
+
+            string palavrainicial;
+         
+          
             do
             {
 
+                desenharforca(quantiaerros);
 
-                desenharforcaclass.desenharforca(forca.quantiaerros, letras);
 
-                char chute = extrairchute();
+                char chute = extrairchute(forca.extrair);
 
-                bool letrasencontradas = false;
 
-                #endregion
-                #region processamento das informaçoes
-                for (int i = 0; i < palavrainicial.Length; i++)
+
+
+                for (int i = 0; i < forca.palavrainicial.Length; i++)
                 {
-                    char letradeagora = palavrainicial[i];
+                    char letradeagora = forca.palavrainicial[i];
                     if (chute == letradeagora)
                     {
 
-                        letras[i] = letradeagora;
+                        forca.letras[i] = letradeagora;
                         letrasencontradas = true;
                     }
 
@@ -44,13 +47,12 @@ namespace JogoDaForca.ConsoleApp
                 if (letrasencontradas == false)
                     forca.quantiaerros++;
 
-                string palavra = string.Join("", letras);
+                string palavra = string.Join("", forca.letras);
 
 
 
-                forca.acertou = palavra == palavrainicial;
-
-                forca.jogadorenforcou = forca.quantiaerros >= 5;
+                forca.acertou = palavra == forca.palavrainicial;
+                Program.quantiaerros(forca);
 
                 if (forca.acertou)
                     Console.WriteLine("\nvoce acertou a palavra secreta");
@@ -64,6 +66,11 @@ namespace JogoDaForca.ConsoleApp
             Console.ReadLine();
         }
 
+        private static void quantiaerros(forca forca)
+        {
+            forca.jogadorenforcou = forca.quantiaerros >= 5;
+        }
+
         private static char extrairchute()
         {
             Console.Write("digite a letra ");
@@ -71,8 +78,33 @@ namespace JogoDaForca.ConsoleApp
             return chute;
         }
 
-      
+        public void desenharforca(int quantiaerros, char[] letras)
+        {
+            string cabeca = quantiaerros >= 1 ? " o " : " ";
+            string tronco = quantiaerros >= 2 ? "x" : " ";
+            string troncobaixo = quantiaerros >= 2 ? " x" : " ";
+            string bracoesquerdo = quantiaerros >= 3 ? "/" : " ";
+            string bracodireito = quantiaerros >= 3 ? @"\" : " ";
+            string pernas = quantiaerros >= 4 ? "/ \\" : " ";
 
+
+            Console.Clear();
+            Console.WriteLine(" ___________        ");
+            Console.WriteLine(" |/        |        ");
+            Console.WriteLine(" |        {0}       ", cabeca);
+            Console.WriteLine(" |        {0}{1}{2} ", bracoesquerdo, tronco, bracodireito);
+            Console.WriteLine(" |        {0}       ", troncobaixo);
+            Console.WriteLine(" |        {0}       ", pernas);
+            Console.WriteLine(" |                  ");
+            Console.WriteLine(" |                  ");
+            Console.WriteLine("_|____              ");
+
+
+
+            Console.WriteLine("\n" + string.Join("", 
+        }
     }
+
+}
     
 }

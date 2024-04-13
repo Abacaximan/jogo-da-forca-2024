@@ -13,12 +13,15 @@ namespace JogoDaForca.ConsoleApp
 
        public bool jogadorenforcou  ;
        public bool acertou  ;
-        public bool eleacertou()
+        public string palavrainicial;
+        public char[] letras;
+
+        public bool eleacertou(char chute,string palavrainicial, char[] letras)
         {
             bool letrasencontradas = false;
 
 
-            #region processamento das informaçoes
+            
             for (int i = 0; i < palavrainicial.Length; i++)
             {
                 char letradeagora = palavrainicial[i];
@@ -32,11 +35,11 @@ namespace JogoDaForca.ConsoleApp
 
             }
 
-
+            
 
 
         }
-       public   string EscolherPalavraAleatoria()
+       public void EscolherPalavraAleatoria()
         {
             string[] palavras = {
                 "ABACATE",
@@ -75,11 +78,11 @@ namespace JogoDaForca.ConsoleApp
 
             int indiceEscolhido = random.Next(palavras.Length);
 
-            return palavras[indiceEscolhido];
+            palavrainicial = palavras[indiceEscolhido];
         }
-        public  char[] extrair(string palavrainicial)
+        public char[]extrair (string palavrainicial)
         {
-            char[] letras = new char[palavrainicial.Length];
+            letras = new char[palavrainicial.Length];
 
             for (int caracteres = 0; caracteres < letras.Length; caracteres++)
             {
